@@ -36,13 +36,9 @@ public class PlayViewModel extends AndroidViewModel {
         playVideo = vRepo.getAllVideos();
         playAudio = aRepo.getAllAudios();
         //  playStream=sRepo.getAllStreams();
-//        new GetSomeMedia(application,this);
 
     }
 
-  //  public void initData() {
-  //      new GetSomeMedia(app, this);
-  //  }
 
     public LiveData <List <Video>> getAllVideos() {
         return playVideo;
@@ -52,7 +48,7 @@ public class PlayViewModel extends AndroidViewModel {
         return playAudio;
     }
 
-    LiveData <List <Stream>> getAllStreams() {
+    public LiveData <List <Stream>> getAllStreams() {
         return playStream;
     }
 

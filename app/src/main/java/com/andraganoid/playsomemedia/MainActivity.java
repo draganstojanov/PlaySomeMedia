@@ -26,6 +26,7 @@ import java.util.List;
 //todo
 // UI
 // remove deleted files from db ???
+// button for fullscreen
 
 public class MainActivity extends AppCompatActivity implements GetSomeMediaCallback {
 

@@ -5,6 +5,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.concurrent.TimeUnit;
+
 @Entity(tableName = "audio_table")
 public class Audio {
 
@@ -28,7 +30,7 @@ public class Audio {
         this.data = data;
         this.displayName = displayName;
         this.title = title;
-        this.artist=artist;
+        this.artist = artist;
         this.duration = duration;
     }
 
@@ -71,5 +73,24 @@ public class Audio {
 
     public void setDuration(long duration) {
         this.duration = duration;
+    }
+
+    public String getFormattedDuration() {
+
+        return String.format("%d:%02d",
+                TimeUnit.MILLISECONDS.toMinutes(getDuration()),
+                TimeUnit.MILLISECONDS.toSeconds(getDuration()) -
+                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(getDuration()))
+        );
+    }
+
+    public String getFormattedTitle() {
+        StringBuilder sb = new StringBuilder();
+        if (!getArtist().isEmpty()) {
+            sb.append(getArtist())
+                    .append(" - ");
+        }
+        sb.append(getTitle());
+        return sb.toString();
     }
 }

@@ -5,6 +5,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.concurrent.TimeUnit;
+
 @Entity(tableName = "video_table")
 public class Video {
 
@@ -109,4 +111,14 @@ public class Video {
     public void setResolution(String resolution) {
         this.resolution = resolution;
     }
+
+    public String getFormattedDuration() {
+
+      return  String.format("%d:%02d",
+                TimeUnit.MILLISECONDS.toMinutes(getDuration()),
+                TimeUnit.MILLISECONDS.toSeconds(getDuration()) -
+                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(getDuration()))
+        );
+    }
+
 }
