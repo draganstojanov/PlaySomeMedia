@@ -1,0 +1,49 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#000000">
+
+
+    <com.google.android.exoplayer2.ui.PlayerView
+        android:id="@+id/video_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/player_channel_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:textColor="#fff"
+        android:textSize="12sp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        tools:text="Channel Name" />
+
+
+    <!-- FAVORITES STAR -->
+    <!--<android.support.constraint.ConstraintLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginRight="32dp"-->
+        <!--android:layout_marginTop="32dp">-->
+
+
+        <!--<ImageView-->
+            <!--android:id="@+id/player_fav_btn"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="48dp"-->
+            <!--android:paddingRight="4dp"-->
+
+            <!--android:src="@drawable/ic_star_border"-->
+            <!--app:layout_constraintTop_toTopOf="parent"-->
+            <!--app:layout_constraintRight_toRightOf="parent" />-->
+
+
+    <!--</android.support.constraint.ConstraintLayout>-->
+
+
+
+</FrameLayout>

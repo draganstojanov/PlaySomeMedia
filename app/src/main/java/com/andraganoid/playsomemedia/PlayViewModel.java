@@ -8,63 +8,52 @@ import androidx.lifecycle.LiveData;
 
 import com.andraganoid.playsomemedia.model.Audio;
 import com.andraganoid.playsomemedia.model.AudioRepository;
-import com.andraganoid.playsomemedia.model.GetSomeMedia;
-import com.andraganoid.playsomemedia.model.GetSomeMediaCallback;
 import com.andraganoid.playsomemedia.model.Stream;
 import com.andraganoid.playsomemedia.model.Video;
 import com.andraganoid.playsomemedia.model.VideoRepository;
 
 import java.util.List;
 
-public class PlayViewModel extends AndroidViewModel implements GetSomeMediaCallback {
+public class PlayViewModel extends AndroidViewModel {
 
     private VideoRepository vRepo;
-   private AudioRepository aRepo;
-  //  private StreamRepository sRepo;
+    private AudioRepository aRepo;
+    //  private StreamRepository sRepo;
     private LiveData <List <Video>> playVideo;
     private LiveData <List <Audio>> playAudio;
     private LiveData <List <Stream>> playStream;
 
+    Application app;
 
     public PlayViewModel(@NonNull Application application) {
         super(application);
+        this.app = application;
 
         vRepo = new VideoRepository(application);
-         aRepo = new AudioRepository(application);
+        aRepo = new AudioRepository(application);
         //  sRepo = new StreamRepository(application);
 
-        playVideo=vRepo.getAllVideos();
-        playAudio=aRepo.getAllAudios();
+        playVideo = vRepo.getAllVideos();
+        playAudio = aRepo.getAllAudios();
         //  playStream=sRepo.getAllStreams();
-        new GetSomeMedia(application,this);
+//        new GetSomeMedia(application,this);
 
     }
 
-    LiveData <List <Video>> getAllVideos() {
+  //  public void initData() {
+  //      new GetSomeMedia(app, this);
+  //  }
+
+    public LiveData <List <Video>> getAllVideos() {
         return playVideo;
     }
 
-    LiveData <List <Audio>> getAllAudios() {
+    public LiveData <List <Audio>> getAllAudios() {
         return playAudio;
     }
 
     LiveData <List <Stream>> getAllStreams() {
         return playStream;
     }
-
-
-    @Override
-    public void videoListCollected(List <Video> getVideo) {
-        vRepo.insertVideoList(getVideo);
-
-    }
-
-    @Override
-    public void audioListCollected(List <Audio> getAudio) {
-        aRepo.insertAudioList(getAudio);
-    }
-
-
-
 
 }

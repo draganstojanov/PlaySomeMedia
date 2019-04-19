@@ -5,6 +5,8 @@ import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
+import com.andraganoid.playsomemedia.MainActivity;
+
 import java.util.List;
 
 public class AudioRepository {
@@ -27,8 +29,8 @@ public class AudioRepository {
         new InsertAudio(aDao).execute(audio);
     }
 
-    public void insertAudioList(List <Audio> aList) {
-        new InsertAudioList(aDao).execute(aList);
+    public void insertAudioList(List <Audio> aList, GetSomeMediaCallback callback) {
+        new InsertAudioList(aDao, callback).execute(aList);
 
     }
 
@@ -51,9 +53,11 @@ public class AudioRepository {
     private static class InsertAudioList extends AsyncTask <List <Audio>, Void, Void> {
 
         private AudioDao dao;
+        private GetSomeMediaCallback callback;
 
-        InsertAudioList(AudioDao dao) {
+        InsertAudioList(AudioDao dao, GetSomeMediaCallback callback) {
             this.dao = dao;
+            this.callback = callback;
         }
 
         @Override
@@ -63,6 +67,12 @@ public class AudioRepository {
                 dao.insert(a);
             }
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            callback.taskFinished();
         }
     }
 }

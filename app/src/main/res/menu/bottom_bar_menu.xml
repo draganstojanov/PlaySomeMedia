@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/bottom_video"
+        android:title="Video"
+  />
+
+    <item
+        android:id="@+id/bottom_audio"
+        android:title="Audio"
+   />
+
+    <item
+        android:id="@+id/bottom_stream"
+        android:title="Stream"
+     />
+
+</menu>

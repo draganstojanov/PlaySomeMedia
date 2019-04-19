@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
-
 import java.util.List;
 
 public class VideoRepository {
@@ -20,6 +19,7 @@ public class VideoRepository {
     }
 
     public LiveData <List <Video>> getAllVideos() {
+        System.out.println("GET: " + System.currentTimeMillis());
         return rAllVideos;
     }
 
@@ -27,9 +27,8 @@ public class VideoRepository {
         new InsertVideo(vDao).execute(video);
     }
 
-    public void insertVideoList(List <Video> vList) {
-        new InsertVideoList(vDao).execute(vList);
-
+    public void insertVideoList(List <Video> vList, GetSomeMediaCallback callback) {
+        new InsertVideoList(vDao, callback).execute(vList);
     }
 
 
@@ -51,9 +50,11 @@ public class VideoRepository {
     private static class InsertVideoList extends AsyncTask <List <Video>, Void, Void> {
 
         private VideoDao dao;
+        private GetSomeMediaCallback callback;
 
-        InsertVideoList(VideoDao dao) {
+        InsertVideoList(VideoDao dao, GetSomeMediaCallback callback) {
             this.dao = dao;
+            this.callback = callback;
         }
 
         @Override
@@ -63,6 +64,13 @@ public class VideoRepository {
                 dao.insert(v);
             }
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            callback.taskFinished();
+
         }
     }
 
