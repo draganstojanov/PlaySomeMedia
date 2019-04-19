@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import java.util.List;
@@ -11,10 +12,10 @@ import java.util.List;
 @Dao
 public interface StreamDao {
 
-    // @Query("SELECT * FROM stream_table ORDER BY artist ASC")
-    // LiveData <List <Stream>> getAllStreams();
+    @Query("SELECT * FROM stream_table ORDER BY name ASC")
+    LiveData <List <Stream>> getAllStreams();
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(Stream stream);
 
     @Query("DELETE FROM stream_table")

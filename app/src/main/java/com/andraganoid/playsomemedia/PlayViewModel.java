@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData;
 import com.andraganoid.playsomemedia.model.Audio;
 import com.andraganoid.playsomemedia.model.AudioRepository;
 import com.andraganoid.playsomemedia.model.Stream;
+import com.andraganoid.playsomemedia.model.StreamRepository;
 import com.andraganoid.playsomemedia.model.Video;
 import com.andraganoid.playsomemedia.model.VideoRepository;
 
@@ -18,7 +19,7 @@ public class PlayViewModel extends AndroidViewModel {
 
     private VideoRepository vRepo;
     private AudioRepository aRepo;
-    //  private StreamRepository sRepo;
+      private StreamRepository sRepo;
     private LiveData <List <Video>> playVideo;
     private LiveData <List <Audio>> playAudio;
     private LiveData <List <Stream>> playStream;
@@ -31,11 +32,11 @@ public class PlayViewModel extends AndroidViewModel {
 
         vRepo = new VideoRepository(application);
         aRepo = new AudioRepository(application);
-        //  sRepo = new StreamRepository(application);
+       sRepo = new StreamRepository(application);
 
         playVideo = vRepo.getAllVideos();
         playAudio = aRepo.getAllAudios();
-        //  playStream=sRepo.getAllStreams();
+          playStream=sRepo.getAllStreams();
 
     }
 

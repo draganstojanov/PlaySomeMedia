@@ -32,27 +32,22 @@ public class AudioFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         aView = inflater.inflate(R.layout.audio_fragment, container, false);
 
-        try {
-            aList = preview.playViewModel.getAllAudios().getValue();
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
-
-
+//        try {
+//            aList = preview.playViewModel.getAllAudios().getValue();
+//        } catch (NullPointerException e) {
+//            e.printStackTrace();
+//        }
+//
         preview = (Preview) getActivity();
         aRecView = aView.findViewById(R.id.audio_rec_view);
         aLayMngr = new LinearLayoutManager(getContext());
         aRecView.setLayoutManager(aLayMngr);
-        //  vAdapter = new VideoAdapter(vList, preview);
-        //  vRecView.setAdapter(vAdapter);
 
         PlayViewModel playViewModel = ViewModelProviders.of(this).get(PlayViewModel.class);
         playViewModel.getAllAudios().observe(this, new Observer <List <Audio>>() {
             @Override
             public void onChanged(List <Audio> audios) {
-              //  Toast.makeText(preview, "AUDIO"+String.valueOf(audios.size()), Toast.LENGTH_SHORT).show();
                 aList = audios;
-                // aAdapter.notifyDataSetChanged();
                 aAdapter = new AudioAdapter(aList, preview);
                 aRecView.setAdapter(aAdapter);
 

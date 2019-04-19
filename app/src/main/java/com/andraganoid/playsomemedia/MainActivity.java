@@ -16,6 +16,8 @@ import android.widget.Toast;
 import com.andraganoid.playsomemedia.model.Audio;
 import com.andraganoid.playsomemedia.model.AudioRepository;
 import com.andraganoid.playsomemedia.model.GetSomeMediaCallback;
+import com.andraganoid.playsomemedia.model.Stream;
+import com.andraganoid.playsomemedia.model.StreamRepository;
 import com.andraganoid.playsomemedia.model.Video;
 import com.andraganoid.playsomemedia.model.VideoRepository;
 import com.andraganoid.playsomemedia.view.Preview;
@@ -28,12 +30,16 @@ import java.util.List;
 // remove deleted files from db ???
 // button for fullscreen
 // button stop playing preview
+// bottombar imgs, indicator...
+// add some example streams
+// adding url
+// adding .m3u
 
 public class MainActivity extends AppCompatActivity implements GetSomeMediaCallback {
 
     private final int REQUEST_CODE = 111;
     private int initTask;
-    private final int INIT_FINISHED = 2;//todo stavi 3 kad zavrsis stream init
+    private final int INIT_FINISHED = 3;//todo stavi 3 kad zavrsis stream init
 
 
     @Override
@@ -58,14 +64,15 @@ public class MainActivity extends AppCompatActivity implements GetSomeMediaCallb
     }
 
 
-    public void play(View v) {
-        Intent intent = new Intent(this, Preview.class);
-        startActivity(intent);
-    }
+//    public void play(View v) {
+//        Intent intent = new Intent(this, Preview.class);
+//        startActivity(intent);
+//    }
 
     private void populateDataBase() {
         getSomeVideo();
         getSomeAudio();
+        getSomeStreams();
     }
 
     private void getSomeVideo() {
@@ -120,12 +127,28 @@ public class MainActivity extends AppCompatActivity implements GetSomeMediaCallb
         new AudioRepository(getApplication()).insertAudioList(getAudio, this);
     }
 
+
+    private void getSomeStreams(){
+        List <Stream> getStream = new ArrayList <>();
+        getStream.add(new Stream("Film Zone HD","http://134.209.75.14:9981/stream/channelid/849457383?profile=h265"));
+        getStream.add(new Stream("Fox HD","http://134.209.75.14:9981/stream/channelid/1095588360?profile=h265"));
+        getStream.add(new Stream("Fox Series","http://134.209.75.14:9981/stream/channelid/506895825?profile=h265"));
+        new StreamRepository(getApplication()).insertStreamList(getStream, this);
+    }
+
     @Override
     public void taskFinished() {
         initTask++;
         if (initTask == INIT_FINISHED) {
-            findViewById(R.id.progres_bar).setVisibility(View.GONE);
-            findViewById(R.id.go_btn).setVisibility(View.VISIBLE);
+               // findViewById(R.id.progres_bar).setVisibility(View.GONE);
+            // findViewById(R.id.go_btn).setVisibility(View.VISIBLE);
+
+            Intent intent = new Intent(this, Preview.class);
+            startActivity(intent);
         }
     }
 }
+
+//http://134.209.75.14:9981/stream/channelid/849457383?profile=h265
+//http://134.209.75.14:9981/stream/channelid/1095588360?profile=h265
+//http://134.209.75.14:9981/stream/channelid/506895825?profile=h265

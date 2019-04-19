@@ -16,8 +16,10 @@ import com.andraganoid.playsomemedia.PlayViewModel;
 import com.andraganoid.playsomemedia.R;
 import com.andraganoid.playsomemedia.fragments.AudioFragment;
 import com.andraganoid.playsomemedia.fragments.PreviewOnClickListener;
+import com.andraganoid.playsomemedia.fragments.StreamFragment;
 import com.andraganoid.playsomemedia.fragments.VideoFragment;
 import com.andraganoid.playsomemedia.model.Audio;
+import com.andraganoid.playsomemedia.model.Stream;
 import com.andraganoid.playsomemedia.model.Video;
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.DefaultLoadControl;
@@ -55,7 +57,7 @@ public class Preview extends AppCompatActivity implements PreviewOnClickListener
 
     private final Fragment VIDEO_FRAGMENT = new VideoFragment();
     private final Fragment AUDIO_FRAGMENT = new AudioFragment();
-    // private final Fragment STREAM_FRAGMENT = new StreamFragment();
+    private final Fragment STREAM_FRAGMENT = new StreamFragment();
 
     private final String TYPE_VIDEO = "Video";
     private final String TYPE_AUDIO = "Audio";
@@ -110,7 +112,7 @@ public class Preview extends AppCompatActivity implements PreviewOnClickListener
                         break;
 
                     case R.id.bottom_stream:
-                        // setFragment(userFragment);
+                        setFragment(STREAM_FRAGMENT);
                         break;
                 }
                 return false;
@@ -229,5 +231,10 @@ public class Preview extends AppCompatActivity implements PreviewOnClickListener
     @Override
     public void audioChoosed(Audio audio) {
         initializePlayer(audio.getData(), audio.getFormattedTitle(), TYPE_AUDIO);
+    }
+
+    @Override
+    public void streamChoosed(Stream stream) {
+        initializePlayer(stream.getUrl(), stream.getName(), TYPE_STREAM);
     }
 }
