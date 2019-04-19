@@ -86,7 +86,7 @@ public class Audio {
 
     public String getFormattedTitle() {
         StringBuilder sb = new StringBuilder();
-        if (!getArtist().isEmpty()) {
+        if (!getArtist().isEmpty() && !getArtist().contains("<unknown>")) {
             sb.append(getArtist())
                     .append(" - ");
         }
