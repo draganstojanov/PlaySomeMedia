@@ -1,11 +1,12 @@
 package com.andraganoid.playsomemedia.view;
 
 import android.annotation.SuppressLint;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +26,7 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
+import com.google.android.exoplayer2.video.VideoListener;
 
 public class Player extends AppCompatActivity {
 
@@ -38,6 +40,9 @@ public class Player extends AppCompatActivity {
 
     private String mediaUri;
 
+    private TextView mediaName;
+    private ImageButton playerClose;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +50,8 @@ public class Player extends AppCompatActivity {
         setContentView(R.layout.player);
         playerView = findViewById(R.id.video_view);
         USER_AGENT = getResources().getString(R.string.app_name);
+        mediaName = findViewById(R.id.player_title);
+        playerClose = findViewById(R.id.player_close);
     }
 
     @Override
@@ -92,6 +99,21 @@ public class Player extends AppCompatActivity {
 
         MediaSource mediaSource = buildMediaSource(Uri.parse(mediaUri));
         player.prepare(mediaSource, true, false);
+
+        player.addVideoListener(new VideoListener() {
+            @Override
+            public void onVideoSizeChanged(int width, int height, int unappliedRotationDegrees, float pixelWidthHeightRatio) {
+                setRequestedOrientation(player.getVideoFormat().height > player.getVideoFormat().width ? ActivityInfo.SCREEN_ORIENTATION_PORTRAIT : ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                mediaName.setText(getIntent().getStringExtra("mediaName"));
+            }
+        });
+
+        playerClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void releasePlayer() {

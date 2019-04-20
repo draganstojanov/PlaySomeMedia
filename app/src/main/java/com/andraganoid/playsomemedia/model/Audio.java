@@ -39,16 +39,8 @@ public class Audio {
         return data;
     }
 
-    public void setData(@NonNull String data) {
-        this.data = data;
-    }
-
     public String getDisplayName() {
         return displayName;
-    }
-
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
     }
 
     public String getTitle() {
@@ -63,16 +55,8 @@ public class Audio {
         return artist;
     }
 
-    public void setArtist(String artist) {
-        this.artist = artist;
-    }
-
     public long getDuration() {
         return duration;
-    }
-
-    public void setDuration(long duration) {
-        this.duration = duration;
     }
 
     public String getFormattedDuration() {

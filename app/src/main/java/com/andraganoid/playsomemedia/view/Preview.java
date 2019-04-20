@@ -5,14 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.andraganoid.playsomemedia.PlayViewModel;
 import com.andraganoid.playsomemedia.R;
 import com.andraganoid.playsomemedia.fragments.AudioFragment;
 import com.andraganoid.playsomemedia.fragments.PreviewOnClickListener;
@@ -20,11 +22,13 @@ import com.andraganoid.playsomemedia.fragments.StreamFragment;
 import com.andraganoid.playsomemedia.fragments.VideoFragment;
 import com.andraganoid.playsomemedia.model.Audio;
 import com.andraganoid.playsomemedia.model.Stream;
+import com.andraganoid.playsomemedia.model.StreamRepository;
 import com.andraganoid.playsomemedia.model.Video;
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
@@ -38,7 +42,7 @@ import com.google.android.exoplayer2.util.Util;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
-public class Preview extends AppCompatActivity implements PreviewOnClickListener {
+public class Preview extends AppCompatActivity implements PreviewOnClickListener, View.OnClickListener {
 
 
     public String USER_AGENT;
@@ -50,7 +54,6 @@ public class Preview extends AppCompatActivity implements PreviewOnClickListener
     private boolean playWhenReady = true;
     public ConstraintLayout playerViewWrapper;
 
-    public PlayViewModel playViewModel;
     BottomNavigationView bottomBar;
 
     private int screenWidth;
@@ -62,10 +65,21 @@ public class Preview extends AppCompatActivity implements PreviewOnClickListener
     private final String TYPE_VIDEO = "Video";
     private final String TYPE_AUDIO = "Audio";
     private final String TYPE_STREAM = "Stream";
+    private final String TYPE_STREAM_URL = "url";
+
+    private String mediaUri;
+    private String mediaName;
+    private String mediaType;
+
+    ImageButton closeButton;
+    ImageButton fullscreenButton;
+    TextView previewTitle;
+    TextView previewType;
 
     @Override
     protected void onResume() {
         super.onResume();
+        previewTitle.setText("");
     }
 
 
@@ -91,28 +105,29 @@ public class Preview extends AppCompatActivity implements PreviewOnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.preview);
 
-        playerViewWrapper = findViewById(R.id.preview_video_view_wrapper);
-        // vFragment = (VideoFragment) getSupportFragmentManager().findFragmentByTag("VIDEO_FRAGMENT");
 
+        playerViewWrapper = findViewById(R.id.preview_video_view_wrapper);
         bottomBar = findViewById(R.id.preview_bottom_bar);
         bottomBar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
-                // findViewById(menuItem.getItemId()).setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-
                 switch (menuItem.getItemId()) {
 
                     case R.id.bottom_video:
                         setFragment(VIDEO_FRAGMENT);
+                        bottomBar.getMenu().getItem(0).setChecked(true);
+
                         break;
 
                     case R.id.bottom_audio:
                         setFragment(AUDIO_FRAGMENT);
+                        bottomBar.getMenu().getItem(1).setChecked(true);
                         break;
 
                     case R.id.bottom_stream:
                         setFragment(STREAM_FRAGMENT);
+                        bottomBar.getMenu().getItem(2).setChecked(true);
                         break;
                 }
                 return false;
@@ -130,6 +145,11 @@ public class Preview extends AppCompatActivity implements PreviewOnClickListener
         playerView = findViewById(R.id.preview_video_view);
         USER_AGENT = getResources().getString(R.string.app_name);
 
+        previewTitle = findViewById(R.id.preview_title);
+        previewType = findViewById(R.id.preview_type);
+        closeButton = findViewById(R.id.player_close);
+        fullscreenButton = findViewById(R.id.preview_fullscreen);
+        closeButton.setOnClickListener(this);
     }
 
 
@@ -143,7 +163,10 @@ public class Preview extends AppCompatActivity implements PreviewOnClickListener
         }
     }
 
-    public void initializePlayer(String mediaUri, String chName, String type) {
+    public void initializePlayer(String mUri, String mName, String mType) {
+        mediaUri = mUri;
+        mediaName = mName.isEmpty() ? mUri : mName;
+        mediaType = mType;
 
         if (player == null) {
 
@@ -162,35 +185,42 @@ public class Preview extends AppCompatActivity implements PreviewOnClickListener
         player.prepare(mediaSource, true, false);
 
         String t = "";
-        if (type.equals(TYPE_AUDIO)) {
+        int fullScr = View.VISIBLE;
+        if (mediaType.equals(TYPE_AUDIO)) {
             t = TYPE_AUDIO;
+            fullScr = View.GONE;
         }
 
-        ((TextView) findViewById(R.id.preview_title)).setText(chName);
-        ((TextView) findViewById(R.id.preview_type)).setText(t);
+        previewTitle.setText(mediaName);
+        previewType.setText(t);
+        fullscreenButton.setVisibility(fullScr);
 
-//        (findViewById(R.id.preview_fullscreen_btn)).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                Intent playIntent = new Intent(getApplicationContext(), Player.class);
-//                playIntent.putExtra("mediaUri", mediaUri);
-//                playIntent.putExtra("channelName", chName);
-//                startActivity(playIntent);
-//
-//            }
-//        });
-//
-//        (findViewById(R.id.preview_close_btn)).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                wrapper.setVisibility(View.GONE);
-//                releasePlayer();
-//
-//            }
-//        });
+        player.addListener(new Player.EventListener() {
+            @Override
+            public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
 
+                switch (playbackState) {
+
+                    case Player.STATE_BUFFERING:
+                        fullscreenButton.setOnClickListener(null);
+                        break;
+
+                    case Player.STATE_ENDED:
+                        fullscreenButton.setOnClickListener(null);
+                        break;
+
+                    case Player.STATE_IDLE:
+                        break;
+
+                    case Player.STATE_READY:
+                        if (mediaType.equals(TYPE_STREAM_URL)) {
+                            new StreamRepository(getApplication()).insertStream(new Stream("", mediaUri));
+                        }
+                        fullscreenButton.setOnClickListener(Preview.this);
+                        break;
+                }
+            }
+        });
     }
 
 
@@ -236,5 +266,26 @@ public class Preview extends AppCompatActivity implements PreviewOnClickListener
     @Override
     public void streamChoosed(Stream stream) {
         initializePlayer(stream.getUrl(), stream.getName(), TYPE_STREAM);
+    }
+
+    public void streamUrlInput(String url) {
+        initializePlayer(url, "", TYPE_STREAM_URL);
+    }
+
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()) {
+            case R.id.player_close:player.stop();
+                break;
+
+            case R.id.preview_fullscreen:
+                Intent playIntent = new Intent(getApplicationContext(), com.andraganoid.playsomemedia.view.Player.class);
+                playIntent.putExtra("mediaUri", mediaUri);
+                playIntent.putExtra("mediaName", mediaName);
+                startActivity(playIntent);
+                break;
+        }
     }
 }

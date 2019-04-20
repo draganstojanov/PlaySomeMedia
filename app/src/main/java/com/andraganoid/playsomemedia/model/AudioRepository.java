@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
-import com.andraganoid.playsomemedia.MainActivity;
 
 import java.util.List;
 

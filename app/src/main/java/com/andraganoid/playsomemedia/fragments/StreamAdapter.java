@@ -1,5 +1,6 @@
 package com.andraganoid.playsomemedia.fragments;
 
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +59,14 @@ public class StreamAdapter extends RecyclerView.Adapter <StreamAdapter.StreamVie
 
         public void bind(final Stream stream, final PreviewOnClickListener click) {
 
-            title.setText(stream.getName());
+            String name = stream.getName();
+            int size = 24;
+            if (name.isEmpty()) {
+                name = stream.getUrl();
+                size = 16;
+            }
+            title.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+            title.setText(name);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

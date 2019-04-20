@@ -34,7 +34,5 @@ public class Stream {
         return url;
     }
 
-    public void setUrl(@NonNull String url) {
-        this.url = url;
-    }
+
 }

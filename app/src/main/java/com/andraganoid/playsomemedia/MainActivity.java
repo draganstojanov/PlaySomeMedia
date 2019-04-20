@@ -26,20 +26,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 //todo
-// UI
+// UI ???
 // remove deleted files from db ???
-// button for fullscreen
-// button stop playing preview
-// bottombar imgs, indicator...
-// add some example streams
-// adding url
-// adding .m3u
+
+
+
 
 public class MainActivity extends AppCompatActivity implements GetSomeMediaCallback {
 
     private final int REQUEST_CODE = 111;
     private int initTask;
-    private final int INIT_FINISHED = 3;//todo stavi 3 kad zavrsis stream init
+    private final int INIT_FINISHED = 3;
 
 
     @Override
@@ -54,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements GetSomeMediaCallb
         }
     }
 
+
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         if (requestCode == REQUEST_CODE)
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -64,10 +62,10 @@ public class MainActivity extends AppCompatActivity implements GetSomeMediaCallb
     }
 
 
-//    public void play(View v) {
-//        Intent intent = new Intent(this, Preview.class);
-//        startActivity(intent);
-//    }
+    public void play(View v) {
+        Intent intent = new Intent(this, Preview.class);
+        startActivity(intent);
+    }
 
     private void populateDataBase() {
         getSomeVideo();
@@ -128,11 +126,16 @@ public class MainActivity extends AppCompatActivity implements GetSomeMediaCallb
     }
 
 
-    private void getSomeStreams(){
+    private void getSomeStreams() {
         List <Stream> getStream = new ArrayList <>();
-        getStream.add(new Stream("Film Zone HD","http://134.209.75.14:9981/stream/channelid/849457383?profile=h265"));
-        getStream.add(new Stream("Fox HD","http://134.209.75.14:9981/stream/channelid/1095588360?profile=h265"));
-        getStream.add(new Stream("Fox Series","http://134.209.75.14:9981/stream/channelid/506895825?profile=h265"));
+
+        getStream.add(new Stream("Test 1", "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8"));
+        getStream.add(new Stream("Test 2", "https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8"));
+        getStream.add(new Stream("Test 3", "https://mnmedias.api.telequebec.tv/m3u8/29880.m3u8"));
+        getStream.add(new Stream("Test 4", "http://184.72.239.149/vod/smil:BigBuckBunny.smil/playlist.m3u8"));
+        getStream.add(new Stream("Test 5", "http://www.streambox.fr/playlists/test_001/stream.m3u8"));
+        getStream.add(new Stream("Test 6", "https://playready.directtaps.net/smoothstreaming/SSWSS720H264/SuperSpeedway_720.ism"));
+
         new StreamRepository(getApplication()).insertStreamList(getStream, this);
     }
 
@@ -140,15 +143,10 @@ public class MainActivity extends AppCompatActivity implements GetSomeMediaCallb
     public void taskFinished() {
         initTask++;
         if (initTask == INIT_FINISHED) {
-               // findViewById(R.id.progres_bar).setVisibility(View.GONE);
-            // findViewById(R.id.go_btn).setVisibility(View.VISIBLE);
-
             Intent intent = new Intent(this, Preview.class);
             startActivity(intent);
+            findViewById(R.id.progres_bar).setVisibility(View.GONE);
+            findViewById(R.id.go_btn).setVisibility(View.VISIBLE);
         }
     }
 }
-
-//http://134.209.75.14:9981/stream/channelid/849457383?profile=h265
-//http://134.209.75.14:9981/stream/channelid/1095588360?profile=h265
-//http://134.209.75.14:9981/stream/channelid/506895825?profile=h265

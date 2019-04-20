@@ -52,16 +52,8 @@ public class Video {
         return data;
     }
 
-    public void setData(@NonNull String data) {
-        this.data = data;
-    }
-
     public String getDisplayName() {
         return displayName;
-    }
-
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
     }
 
     public String getTitle() {
@@ -76,40 +68,20 @@ public class Video {
         return dateTaken;
     }
 
-    public void setDateTaken(long dateTaken) {
-        this.dateTaken = dateTaken;
-    }
-
     public long getDuration() {
         return duration;
-    }
-
-    public void setDuration(long duration) {
-        this.duration = duration;
     }
 
     public int getWidth() {
         return width;
     }
 
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
     public int getHeight() {
         return height;
     }
 
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
     public String getResolution() {
         return resolution;
-    }
-
-    public void setResolution(String resolution) {
-        this.resolution = resolution;
     }
 
     public String getFormattedDuration() {

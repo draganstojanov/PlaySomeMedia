@@ -1,9 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/stream_frag"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        android:background="#fff"
+        android:layout_marginBottom="4dp">
+
+        <EditText
+            android:id="@+id/stream_input"
+            android:layout_width="0dp"
+            android:layout_weight="5"
+            android:layout_height="match_parent"
+            android:background="#fff"
+            android:hint="Type or paste stream URL..."
+            android:padding="8dp" />
+
+        <ImageButton
+            android:id="@+id/stream_input_btn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#FFFFFF"
+            android:tint="#000000"
+            app:srcCompat="@drawable/exo_controls_play"
+            android:clickable="true"/>
+
+    </LinearLayout>
 
 
     <androidx.recyclerview.widget.RecyclerView

@@ -3,17 +3,17 @@
 
     <item
         android:id="@+id/bottom_video"
-        android:title="Video"
-  />
+        android:icon="@drawable/ic_video_library_white_24dp"
+        android:title="Video" />
 
     <item
         android:id="@+id/bottom_audio"
-        android:title="Audio"
-   />
+        android:icon="@drawable/ic_library_music_white_24dp"
+        android:title="Audio" />
 
     <item
         android:id="@+id/bottom_stream"
-        android:title="Stream"
-     />
+        android:icon="@drawable/ic_live_tv_white_24dp"
+        android:title="Stream" />
 
 </menu>
