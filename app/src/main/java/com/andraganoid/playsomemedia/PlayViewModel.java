@@ -19,10 +19,10 @@ public class PlayViewModel extends AndroidViewModel {
 
     private VideoRepository vRepo;
     private AudioRepository aRepo;
-      private StreamRepository sRepo;
-    private LiveData <List <Video>> playVideo;
-    private LiveData <List <Audio>> playAudio;
-    private LiveData <List <Stream>> playStream;
+    private StreamRepository sRepo;
+    private LiveData<List<Video>> playVideo;
+    private LiveData<List<Audio>> playAudio;
+    private LiveData<List<Stream>> playStream;
 
     Application app;
 
@@ -32,24 +32,23 @@ public class PlayViewModel extends AndroidViewModel {
 
         vRepo = new VideoRepository(application);
         aRepo = new AudioRepository(application);
-       sRepo = new StreamRepository(application);
+        sRepo = new StreamRepository(application);
 
         playVideo = vRepo.getAllVideos();
         playAudio = aRepo.getAllAudios();
-          playStream=sRepo.getAllStreams();
+        playStream = sRepo.getAllStreams();
 
     }
 
-
-    public LiveData <List <Video>> getAllVideos() {
+    public LiveData<List<Video>> getAllVideos() {
         return playVideo;
     }
 
-    public LiveData <List <Audio>> getAllAudios() {
+    public LiveData<List<Audio>> getAllAudios() {
         return playAudio;
     }
 
-    public LiveData <List <Stream>> getAllStreams() {
+    public LiveData<List<Stream>> getAllStreams() {
         return playStream;
     }
 

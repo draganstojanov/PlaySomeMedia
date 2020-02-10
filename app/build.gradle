@@ -1,11 +1,11 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         applicationId "com.andraganoid.playsomemedia"
         minSdkVersion 16
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 1
         versionName "0.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -30,27 +30,27 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.1.0-alpha04'
+    implementation 'androidx.appcompat:appcompat:1.2.0-alpha02'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0-alpha04'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 
-    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'com.google.android.material:material:1.1.0'
   //  implementation "com.android.support:support-compat:28.0.0"
 
 //    implementation "android.arch.navigation:navigation-fragment:1.0.0"
 //    implementation "android.arch.navigation:navigation-ui:1.0.0"
 
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.2.0-alpha03'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0-alpha03'
+    testImplementation 'junit:junit:4.13'
+    androidTestImplementation 'androidx.test:runner:1.3.0-alpha03'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0-alpha03'
 
     implementation 'com.google.android.exoplayer:exoplayer:2.9.2'
 
     implementation "android.arch.persistence.room:runtime:$rootProject.roomVersion"
     annotationProcessor "android.arch.persistence.room:compiler:$rootProject.roomVersion"
 
-    implementation 'com.github.bumptech.glide:glide:4.9.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 
 
 }
