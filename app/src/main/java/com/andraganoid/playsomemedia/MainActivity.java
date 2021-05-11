@@ -25,11 +25,6 @@ import com.andraganoid.playsomemedia.view.Preview;
 import java.util.ArrayList;
 import java.util.List;
 
-//todo
-// UI ???
-// remove deleted files from db ???
-
-
 
 
 public class MainActivity extends AppCompatActivity implements GetSomeMediaCallback {
@@ -53,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements GetSomeMediaCallb
 
 
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_CODE)
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 populateDataBase();

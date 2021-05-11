@@ -1,19 +1,29 @@
-apply plugin: 'com.android.application'
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+}
+
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
     defaultConfig {
         applicationId "com.andraganoid.playsomemedia"
-        minSdkVersion 16
-        targetSdkVersion 29
-        versionCode 1
-        versionName "0.1"
+        minSdkVersion 21
+        targetSdkVersion 30
+        versionCode 2
+        versionName "0.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            minifyEnabled false
+        }
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            debuggable false
         }
     }
     compileOptions {
@@ -21,36 +31,59 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    dataBinding {
-        enabled = true
+    kotlinOptions {
+        jvmTarget = '1.8'
     }
 
 
-}
+    buildFeatures {
+        dataBinding true
+        viewBinding true
+    }
 
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.2.0-alpha02'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 
-    implementation 'com.google.android.material:material:1.1.0'
-  //  implementation "com.android.support:support-compat:28.0.0"
+    def lifecycle_ver = "2.3.1"
+    def room_version = "2.3.0"
+    def koin_version = "3.0.1"
 
-//    implementation "android.arch.navigation:navigation-fragment:1.0.0"
-//    implementation "android.arch.navigation:navigation-ui:1.0.0"
 
-    testImplementation 'junit:junit:4.13'
-    androidTestImplementation 'androidx.test:runner:1.3.0-alpha03'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0-alpha03'
+    dependencies {
 
-    implementation 'com.google.android.exoplayer:exoplayer:2.9.2'
+        // AndroidX
+        implementation 'androidx.appcompat:appcompat:1.2.0'
+        implementation 'androidx.core:core-ktx:1.3.2'
+        implementation 'com.google.android.material:material:1.4.0-beta01'
+        implementation 'androidx.viewpager2:viewpager2:1.0.0'
+        implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+        implementation 'androidx.fragment:fragment-ktx:1.3.3'
 
-    implementation "android.arch.persistence.room:runtime:$rootProject.roomVersion"
-    annotationProcessor "android.arch.persistence.room:compiler:$rootProject.roomVersion"
+        // Lifecycle
+        implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
+        implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_ver"
+        implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_ver"
 
-    implementation 'com.github.bumptech.glide:glide:4.11.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+        // Coroutines
+        implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.3"
 
+        // Gson
+        implementation 'com.google.code.gson:gson:2.8.6'
+
+        // Coil
+        implementation "io.coil-kt:coil:1.1.1"
+
+        // Koin
+        implementation "io.insert-koin:koin-android:$koin_version"
+
+        // Room
+        implementation "androidx.room:room-runtime:$room_version"
+        implementation "androidx.room:room-ktx:$room_version"
+        kapt "androidx.room:room-compiler:$room_version"
+
+
+        //Test
+//    testImplementation 'junit:junit:4.+'
+//    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+//    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    }
 
 }
