@@ -5,7 +5,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "stream_table")
+//@Entity(tableName = "stream_table")
 public class Stream {
 
     @PrimaryKey

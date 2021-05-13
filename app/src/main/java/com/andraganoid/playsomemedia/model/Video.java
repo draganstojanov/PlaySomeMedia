@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 
 import java.util.concurrent.TimeUnit;
 
-@Entity(tableName = "video_table")
+//@Entity(tableName = "video_table")
 public class Video {
 
     @PrimaryKey

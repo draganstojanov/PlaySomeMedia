@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 
 import java.util.concurrent.TimeUnit;
 
-@Entity(tableName = "audio_table")
+//@Entity(tableName = "audio_table")
 public class Audio {
 
     @PrimaryKey
