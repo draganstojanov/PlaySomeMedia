@@ -1,7 +1,7 @@
-package com.andraganoid.playsomemedia.k
+package com.andraganoid.playsomemedia
 
 import android.app.Application
-import com.andraganoid.playsomemedia.k.di.Modules
+import com.andraganoid.playsomemedia.di.Modules
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 

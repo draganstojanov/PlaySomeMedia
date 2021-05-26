@@ -1,4 +1,4 @@
-package com.andraganoid.playsomemedia.k.util
+package com.andraganoid.playsomemedia.util
 
 const val AUDIO_TABLE = "audio_table"
 const val VIDEO_TABLE = "video_table"

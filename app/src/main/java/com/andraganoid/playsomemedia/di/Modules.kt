@@ -1,11 +1,12 @@
-package com.andraganoid.playsomemedia.k.di
+package com.andraganoid.playsomemedia.di
 
 import android.app.Application
 import androidx.room.Room
-import com.andraganoid.playsomemedia.k.db.AudioDao
-import com.andraganoid.playsomemedia.k.db.PlaySomeDatabase
-import com.andraganoid.playsomemedia.k.db.StreamDao
-import com.andraganoid.playsomemedia.k.db.VideoDao
+import com.andraganoid.playsomemedia.db.AudioDao
+import com.andraganoid.playsomemedia.db.PlaySomeDatabase
+import com.andraganoid.playsomemedia.db.StreamDao
+import com.andraganoid.playsomemedia.db.VideoDao
+import com.andraganoid.playsomemedia.repository.AudioRepository
 import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
 
@@ -17,8 +18,7 @@ object Modules {
     }
 
     private val singleModule = module {
-//        single { CountriesRepository(get(), get()) }
-//        single { Preferences(androidContext()) }
+        single { AudioRepository(get(),androidApplication()) }
     }
 
 

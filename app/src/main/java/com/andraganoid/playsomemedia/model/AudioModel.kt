@@ -1,15 +1,17 @@
-package com.andraganoid.playsomemedia.k.model
+package com.andraganoid.playsomemedia.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.andraganoid.playsomemedia.k.util.AUDIO_TABLE
+import com.andraganoid.playsomemedia.util.AUDIO_TABLE
+import org.jetbrains.annotations.NotNull
 
 
 @Entity(tableName = AUDIO_TABLE)
 data class AudioModel(
     @PrimaryKey
-    var data: String? = null,
+    @NotNull
+    var data: String = "",
 
     @ColumnInfo
     val displayName: String? = null,
@@ -21,5 +23,5 @@ data class AudioModel(
     val artist: String? = null,
 
     @ColumnInfo
-    var duration: Long = 0
+    var duration: Long? = 0
 )
